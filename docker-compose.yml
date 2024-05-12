@@ -1,0 +1,45 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.server
+    command: --debug --dbaddr db:3306 --dbuser pokerogue --dbpass pokerogue --dbname pokeroguedb
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - internal
+    ports:
+      - "127.0.0.1:8001:8001"
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: pokeroguedb
+      MYSQL_USER: pokerogue
+      MYSQL_PASSWORD: pokerogue
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - internal
+    ports:
+      - "127.0.0.1:3306:3306"
+  client:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.client
+    restart: unless-stopped
+    depends_on:
+      - server
+    networks:
+      - internal
+    ports:
+      - "127.0.0.1:8000:8000"
+    command: "npm start"
+
+volumes:
+  database:
+
+networks:
+  internal:

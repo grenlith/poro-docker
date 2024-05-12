@@ -1,0 +1,13 @@
+ARG NODE_VERSION=18.3.0
+
+FROM node:${NODE_VERSION}
+
+WORKDIR /app
+
+COPY pokerogue/package*.json ./
+
+RUN npm install
+
+COPY pokerogue/. .
+
+EXPOSE 8000
