@@ -22,7 +22,10 @@ easy as cake:
 docker compose up
 ```
 
-*note, you can add the `-d` flag, making this `docker compose up -d`, if you don't want to see the server logs. this is recommended.*
+#### notes
+- if you wish to use the account system instead of sessions being tied to devices, change `VITE_BYPASS_LOGIN` to `0` in `pokerogue/.env.development`
+  - if you do this after you already have session data, creating an account will not carry over your session data. you will have to start over.
+- you can add the `-d` flag, making this `docker compose up -d`, if you don't want to see the server logs. this is recommended.
 
 ### updating
 
